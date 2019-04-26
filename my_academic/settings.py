@@ -26,7 +26,7 @@ SECRET_KEY = keys.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = keys.DEBUG_MODE
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'django_extensions',
 ]
 
 LOCAL_APPS = [
@@ -137,3 +138,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Geração do grafo do banco de dados
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
