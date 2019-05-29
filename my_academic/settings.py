@@ -58,6 +58,7 @@ LOCAL_APPS = [
     'publication.apps.PublicationConfig',
     'student.apps.StudentConfig',
     'study_group.apps.StudyGroupConfig',
+    'my_academic'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS 
