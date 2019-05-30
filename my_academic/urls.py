@@ -17,7 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
+from student.viewsets import StudentViewSet
+
+router = routers.DefaultRouter()
+router.register('estudante', StudentViewSet, basename='estudate')
+
 urlpatterns = [
+    path('', include((router.urls, 'estudante'), namespace='estudante')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('rest-auth/', include('rest_auth.urls')),
