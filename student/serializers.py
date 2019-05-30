@@ -7,38 +7,36 @@ from study_group.models import StudyGroup
 class StudyGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudyGroup
-        fields = ('id', )
+        fields = '__all__'
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', )
+        fields = '__all__'
 
 class StudentSerializer(serializers.ModelSerializer):
-    project = ProjectSerializer(many=True)
-    study_group = StudyGroupSerializer(many=True)
+    project = serializers.PrimaryKeyRelatedField(many=True, queryset=Project.objects.all().values('id'))
+    study_group = serializers.PrimaryKeyRelatedField(many=True, queryset=StudyGroup.objects.all().values('id'))
 
     class Meta:
         model = Student
-        fields = '__all__'
+        fields = ('name', 'role', 'project', 'study_group')
 
     def create(self, validated_data):
         # pegando os dados do json
         projects_id = validated_data.pop('project')
         study_groups_id = validated_data.pop('study_group')
-        print(projects_id)
 
         student = Student()
         student.name = validated_data.pop('name')
         student.role = validated_data.pop('role')
+        student.save()
 
-        for idx in projects_id:
-            print(idx)
-            p = Project.objects.get(id=idx)
+        for project in projects_id:
+            p = Project.objects.get(id=project['id'])
             student.project.add(p)
-            
-        for idx in study_groups_id:
-            s = StudyGroup.objects.get(id=idx)
+        for study_group in study_groups_id:
+            s = StudyGroup.objects.get(id=study_group['id'])
             student.study_group.add(s)
 
         return student
