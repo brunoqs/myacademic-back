@@ -10,4 +10,9 @@ class StudentViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         return Student.objects.all()
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = StudentSerializer(instance=instance)
+    #     return Response(serializer.data)
         

@@ -18,12 +18,17 @@ from django.urls import path, include
 from rest_framework import routers
 
 from student.viewsets import StudentViewSet
+from project.viewsets import ProjectViewSet
+from study_group.viewsets import StudyGroupViewSet
 
 router = routers.DefaultRouter()
 router.register('estudante', StudentViewSet, basename='estudate')
+router.register('projeto', ProjectViewSet, basename='projeto')
+router.register('grupo-estudo', StudyGroupViewSet, basename='grupo-estudo')
+
 
 urlpatterns = [
-    path('', include((router.urls, 'estudante'), namespace='estudante')),
+    path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('rest-auth/', include('rest_auth.urls')),
