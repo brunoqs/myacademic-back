@@ -52,16 +52,16 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'class.apps.ClassConfig',
     'professor.apps.ProfessorConfig',
     'project.apps.ProjectConfig',
     'publication.apps.PublicationConfig',
     'student.apps.StudentConfig',
     'study_group.apps.StudyGroupConfig',
-    'my_academic'
+    'subject.apps.SubjectConfig',
+    'my_academic',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS 
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 SITE_ID = 1
 

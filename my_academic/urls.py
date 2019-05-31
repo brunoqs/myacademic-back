@@ -17,14 +17,20 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from student.viewsets import StudentViewSet
+from professor.viewsets import ProfessorViewSet
 from project.viewsets import ProjectViewSet
+from publication.viewsets import PublicationViewSet
+from student.viewsets import StudentViewSet
 from study_group.viewsets import StudyGroupViewSet
+from subject.viewsets import SubjectViewSet
 
 router = routers.DefaultRouter()
-router.register('estudante', StudentViewSet, basename='estudate')
+router.register('professor', ProfessorViewSet, basename='professor')
 router.register('projeto', ProjectViewSet, basename='projeto')
+router.register('publicacao', PublicationViewSet, basename='publicacao')
+router.register('estudante', StudentViewSet, basename='estudante')
 router.register('grupo-estudo', StudyGroupViewSet, basename='grupo-estudo')
+router.register('disciplina', SubjectViewSet, basename='disciplina')
 
 
 urlpatterns = [
