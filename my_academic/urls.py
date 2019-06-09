@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.authtoken import views
+
 
 from professor.viewsets import ProfessorViewSet
 from project.viewsets import ProjectViewSet
@@ -35,8 +37,9 @@ router.register('disciplina', SubjectViewSet, basename='disciplina')
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api/v1/login/', views.obtain_auth_token),
+    # path('admin/', admin.site.urls),
+    # path('api-auth/', include('rest_framework.urls')),
+    # path('rest-auth/', include('rest_auth.urls')),
+    # path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
