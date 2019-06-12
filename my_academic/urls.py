@@ -16,10 +16,30 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from rest_framework.authtoken import views
+
+
+from professor.viewsets import ProfessorViewSet
+from project.viewsets import ProjectViewSet
+from publication.viewsets import PublicationViewSet
+from student.viewsets import StudentViewSet
+from study_group.viewsets import StudyGroupViewSet
+from subject.viewsets import SubjectViewSet
+
+router = routers.DefaultRouter()
+router.register('professor', ProfessorViewSet, basename='professor')
+router.register('projeto', ProjectViewSet, basename='projeto')
+router.register('publicacao', PublicationViewSet, basename='publicacao')
+router.register('estudante', StudentViewSet, basename='estudante')
+router.register('grupo-estudo', StudyGroupViewSet, basename='grupo-estudo')
+router.register('disciplina', SubjectViewSet, basename='disciplina')
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('rest-auth/', include('rest_auth.urls')),
-    path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api/v1/', include(router.urls)),
+    path('api/v1/login/', views.obtain_auth_token),
+    # path('admin/', admin.site.urls),
+    # path('api-auth/', include('rest_framework.urls')),
+    # path('rest-auth/', include('rest_auth.urls')),
+    # path('rest-auth/registration/', include('rest_auth.registration.urls')),
 ]

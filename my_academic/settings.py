@@ -49,29 +49,32 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
+    'corsheaders',
 ]
 
 LOCAL_APPS = [
-    'class.apps.ClassConfig',
     'professor.apps.ProfessorConfig',
     'project.apps.ProjectConfig',
     'publication.apps.PublicationConfig',
     'student.apps.StudentConfig',
     'study_group.apps.StudyGroupConfig',
+    'subject.apps.SubjectConfig',
+    'my_academic',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS 
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'my_academic.urls'
@@ -99,14 +102,22 @@ WSGI_APPLICATION = 'my_academic.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # postgres config
+# DATABASES = {
+# 	'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': keys.DATABASE_NAME,
+#         'USER': keys.DATABASE_USER,
+#         'PASSWORD': keys.DATABASE_PASSWD,
+#         'HOST': keys.DATABASE_HOST,
+# 		'PORT': keys.DATABASE_PORT,
+#     }
+# }
+
+# sqlite config
 DATABASES = {
 	'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': keys.DATABASE_NAME,
-        'USER': keys.DATABASE_USER,
-        'PASSWORD': keys.DATABASE_PASSWD,
-        'HOST': keys.DATABASE_HOST,
-		'PORT': keys.DATABASE_PORT,
     }
 }
 
@@ -130,8 +141,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
 # Internationalization
@@ -158,6 +172,9 @@ EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 465
+
+# cors
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Geração do grafo do banco de dados
 GRAPH_MODELS = {
