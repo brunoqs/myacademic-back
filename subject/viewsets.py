@@ -2,6 +2,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.permissions import AllowAny
 
 from .models import Subject
 from .serializers import SubjectSerializer, SubjectContentSerializer
@@ -33,3 +34,8 @@ class SubjectViewSet(ModelViewSet):
             return Response(serializer.data, status=HTTP_201_CREATED)
 
         return Response(json, status=HTTP_400_BAD_REQUEST)
+
+    def get_permissions(self):
+        if self.action in ('list', 'retrieve'):
+            self.permission_classes = [AllowAny,]
+        return super(SubjectViewSet, self).get_permissions()
